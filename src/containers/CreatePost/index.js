@@ -20,6 +20,7 @@ class CreatePost extends React.Component {
       id: '', //documentid
       approve: 'false',
       image: "",
+      amountArrange:''
     }
 }
   componentDidMount = async () => {
@@ -33,7 +34,13 @@ class CreatePost extends React.Component {
     console.log(User, 'create post page');
   }
   createPost = () => {
-    const { username, phonenumber, bgroup, quality, price, uid, approve, image } = this.state;
+    const { username, phonenumber, bgroup, quality, price, uid, approve, image,amountArrange } = this.state;
+    if (!username) return alert('Please enter your Username')
+    else if (!phonenumber) return alert('Please enter your Phone Number')
+    else if (!bgroup) return alert('Please enter your Blood Group')
+    else if (!quality) return alert('Please enter the Quality')
+    else if (!price) return alert('Please enter the Price')
+    else if (!image) return alert('Please select Image')
     const ref = firestore().collection("createPost").doc()
     const id = ref.id;
     this.setState({ id })
@@ -42,10 +49,11 @@ class CreatePost extends React.Component {
       phonenumber,
       bgroup,
       quality,
-      price,
+      total_amount:price,
       approve,
       uid,
       image,
+      amountArrange,
       id
     })
       .then((docRef) => {
@@ -93,7 +101,7 @@ class CreatePost extends React.Component {
     const { username, phonenumber, bgroup, quality, price, description, image } = this.state;
     return (
       <View style={{ flex: 1, backgroundColor: "white", justifyContent: 'flex-start' }}>
-        <Header />
+        <Header navigation={this.props.navigation} />
         <ScrollView>
           <View style={{ padding: 20 }}>
             <Text style={{ fontSize: 20, fontWeight: '700' }}>C R E A T E P O S T</Text>

@@ -61,7 +61,7 @@ decline=(id)=>{
                          <Text>Name:{data.username}</Text>
                          <Text>Phone Number:{data.phonenumber}</Text>
                          <Text>Blood Group:{data.bgroup}</Text>
-                         <Text>Price:{data.price}</Text>
+                         <Text>Total Amount:{data.total_amount}</Text>
                          <Text>Quality:{data.quality}</Text>
                              <View style={{flexDirection:'row',justifyContent:'flex-end'}}>
                                  <TouchableOpacity style={{backgroundColor:'green',padding:10,borderRadius:6}} onPress={()=>this.approve(data.id)}>

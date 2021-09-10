@@ -11,6 +11,10 @@
 #import <FlipperKitNetworkPlugin/FlipperKitNetworkPlugin.h>
 #import <SKIOSNetworkPlugin/SKIOSNetworkAdapter.h>
 #import <FlipperKitReactPlugin/FlipperKitReactPlugin.h>
+#import <RNGoogleSignin/RNGoogleSignin.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h> // <- Add This Import
+#import <React/RCTLinkingManager.h> // <- Add This Import
+
 
 static void InitializeFlipper(UIApplication *application) {
   FlipperClient *client = [FlipperClient sharedClient];
@@ -51,9 +55,19 @@ static void InitializeFlipper(UIApplication *application) {
   if ([FIRApp defaultApp] == nil) {
     [FIRApp configure];
   }
+  [[FBSDKApplicationDelegate sharedInstance] application:application
+                            didFinishLaunchingWithOptions:launchOptions];
   return YES;
 }
-
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+            options:(nonnull NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options
+{
+  [[FBSDKApplicationDelegate sharedInstance] application:application
+                                                 openURL:url
+                                                 options:options];
+  return YES;
+}
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
 {
 #if DEBUG

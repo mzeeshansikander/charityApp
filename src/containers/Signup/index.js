@@ -18,7 +18,15 @@ class Signup extends React.Component {
     }
     register=()=>{
         const {fname,lname,password,c_passowrd,mobile_num,email,identity}=this.state;
-        this.setState({loader:true})
+         if (!fname) return alert('Please enter your First Name')
+         else if (!lname) return alert('Please enter your Last Name')
+        else if (!email) return alert('Please enter your Email.')
+        else if (!password && password.length > 5) return alert('Please enter your Password')
+        else if (!c_passowrd && password.length > 5) return alert('Please enter your Confirm Password')
+        else if(password !== c_passowrd)return alert("Passwords doesn't match")
+        else if (!mobile_num) return alert('Please enter your Mobile number')
+        else if (!identity) return alert('Please enter your identity')
+         this.setState({loader:true})
         auth().createUserWithEmailAndPassword(email, password)
         .then(({ user: { uid } }) => {
           const details = {
@@ -37,7 +45,7 @@ class Signup extends React.Component {
             })
             .then(() => {
               this.setState({loader:false})
-              this.props.navigation.navigate("login")
+              this.props.navigation.navigate("Login")
             })
             .catch((err) => {
               this.setState({loader:false})
@@ -46,7 +54,7 @@ class Signup extends React.Component {
         })
         .catch((error) => {
           this.setState({loader:false})
-         console.log(error.message);
+          alert(error.message);
           // ..
         });
     }

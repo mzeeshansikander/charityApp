@@ -2,8 +2,10 @@
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 //Screens
-import {Splash,Signup,Login,Dashboard,CreatePost,AdminView} from './containers';
+import {Splash,Signup,Login,Dashboard,CreatePost,AdminView,CaseDetail,Role} from './containers';
+import {createBottomTabNavigator} from 'react-navigation-tabs';
 
+import TabbarComp from './TabbarComp';
 const SplashStack = createStackNavigator(
   {
     Splash: {screen: Splash},
@@ -18,57 +20,40 @@ const SplashStack = createStackNavigator(
 const LoginStack = createStackNavigator(
   {
     Login: {screen: Login},
+    Signup: {screen: Signup},
     Dashboard: {screen: Dashboard},
     CreatePost: {screen: CreatePost},
     AdminView: {screen: AdminView},
+    CaseDetail: {screen: CaseDetail},
+    Role: {screen: Role},
   },
-
   {
     initialRouteName: 'Login',
     headerMode: 'none',
   },
 );
-const SignupStack = createStackNavigator(
+
+const TabNavigator = createBottomTabNavigator(
   {
-    Signup: {screen: Signup},
+    Dashboard: {screen: Dashboard},
+    CreatePost: {screen: CreatePost},
+    AdminView: {screen: AdminView},
+    CaseDetail: {screen: CaseDetail},
   },
 
   {
-    initialRouteName: 'Signup',
+    initalRouteParams: 'Dashboard',
+    tabBarComponent:(props)=><TabbarComp  {...props}/>,
     headerMode: 'none',
   },
 );
-// const authStack = createStackNavigator(
-//   {
-//     Login: {screen: Login},
-//     Verify: {screen: Verify},
-//   },
-
-//   {
-//     initialRouteName: 'Verify',
-//     headerMode: 'none',
-//   },
-// );
-
-// const AppNavigator = createStackNavigator(
-//   {
-//     // TabView: {screen: TabView},
-//     // Leaderboard: {screen: Leaderboard},
-//   },
-
-//   {
-//     initialRouteName: 'MainStack',
-//     headerMode: 'none',
-//   },
-// );
-
 const RootStack = createAppContainer(
   createSwitchNavigator(
     {
       Splash: SplashStack,
       Login:LoginStack,
-      Signup:SignupStack,
-      // Auth: authStack,
+      TabNavigator
+     // Auth: authStack,
       // Index: indexStack,
       //App: MainStack,
     },

@@ -20,7 +20,9 @@ class HeaderCustom extends React.Component {
       <View style={{ width: '100%', backgroundColor: "GREEN"}}>
       <StatusBar barStyle="light-content" translucent />
       <View style={{ marginTop: getStatusBarHeight(), padding: 10,paddingHorizontal:15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-
+        <TouchableOpacity onPress={()=>this.props.navigation.goBack()}>
+           <Text style={{ fontSize: 16, color: 'black' }}>back</Text>
+       </TouchableOpacity>
         <Text style={{ fontSize: 22, color: 'black' }}>Blood Bank App</Text>
        {
           logoutvisible ? <TouchableOpacity onPress={this.logout}><Text>LOGOUT</Text></TouchableOpacity> : null
