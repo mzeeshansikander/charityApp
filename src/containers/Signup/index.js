@@ -66,23 +66,21 @@ class Signup extends React.Component {
               <ActivityIndicator size="large" color="black"  />
               </View>:null 
          }
-          <Header />
           <View style={{padding:20}}>
-            <Text style={{fontSize:20,fontWeight:'700'}}>S I G N U P</Text>
-            <Text style={{marginTop:10}}>Please fill the form</Text>
-            <TextInput value={fname} onChangeText={(fname)=>this.setState({fname})} placeholder="First Name" style={{marginTop:10,padding:10,borderColor:'gray',borderWidth:1}} />
-            <TextInput value={lname} onChangeText={(lname)=>this.setState({lname})} placeholder="Last Name" style={{marginTop:10,padding:10,borderColor:'gray',borderWidth:1}} />
-            <TextInput value={email} onChangeText={(email)=>this.setState({email})} placeholder="Email" style={{marginTop:10,padding:10,borderColor:'gray',borderWidth:1}} />
-            <TextInput value={password} onChangeText={(password)=>this.setState({password})} placeholder="Enter Password" style={{marginTop:10,padding:10,borderColor:'gray',borderWidth:1}} />
-            <TextInput value={c_passowrd} onChangeText={(c_passowrd)=>this.setState({c_passowrd})} placeholder="Confirm Password" style={{marginTop:10,padding:10,borderColor:'gray',borderWidth:1}} />
-            <TextInput value={mobile_num} onChangeText={(mobile_num)=>this.setState({mobile_num})}  placeholder="Mobile Number" style={{marginTop:10,padding:10,borderColor:'gray',borderWidth:1}} />                
-            <TextInput value={identity} onChangeText={(identity)=>this.setState({identity})} placeholder="Who are you" style={{marginTop:10,padding:10,borderColor:'gray',borderWidth:1}} />
+            <Text style={{ fontSize: 28, fontWeight: '700',textAlign:'center',marginTop:60,color:'#A3D343' }}>S I G N U P</Text>
+            <TextInput value={fname} onChangeText={(fname)=>this.setState({fname})} placeholder="First Name" style={{marginTop:10,borderRadius:30,padding:10,borderColor:'gray',borderWidth:1}} />
+            <TextInput value={lname} onChangeText={(lname)=>this.setState({lname})} placeholder="Last Name" style={{marginTop:10,borderRadius:30,padding:10,borderColor:'gray',borderWidth:1}} />
+            <TextInput value={email} onChangeText={(email)=>this.setState({email})} placeholder="Email" style={{marginTop:10,borderRadius:30,padding:10,borderColor:'gray',borderWidth:1}} />
+            <TextInput value={password} onChangeText={(password)=>this.setState({password})} placeholder="Enter Password" style={{marginTop:10,borderRadius:30,padding:10,borderColor:'gray',borderWidth:1}} />
+            <TextInput value={c_passowrd} onChangeText={(c_passowrd)=>this.setState({c_passowrd})} placeholder="Confirm Password" style={{marginTop:10,borderRadius:30,padding:10,borderColor:'gray',borderWidth:1}} />
+            <TextInput value={mobile_num} onChangeText={(mobile_num)=>this.setState({mobile_num})}  placeholder="Mobile Number" style={{marginTop:10,borderRadius:30,padding:10,borderColor:'gray',borderWidth:1}} />                
+            <TextInput value={identity} onChangeText={(identity)=>this.setState({identity})} placeholder="Who are you" style={{marginTop:10,borderRadius:30,padding:10,borderColor:'gray',borderWidth:1}} />
            
-           <TouchableOpacity onPress={this.register} style={{marginTop:40,borderRadius:30,padding:10,width:'100%',alignSelf:'center',backgroundColor:'#33CAFF'}}>
-                <Text style={{textAlign:'center'}}>REGISTER</Text>
+           <TouchableOpacity onPress={this.register} style={{ marginTop: 10, borderRadius: 30, padding: 10, width: '100%', alignSelf: 'center', backgroundColor: '#A3D343' }}>
+                <Text style={{textAlign:'center',color:"white" ,fontWeight:'600'}}>REGISTER</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={()=>this.props.navigation.navigate('Login')} style={{marginTop:10,borderRadius:30,padding:10,width:'100%',alignSelf:'center',backgroundColor:'#33CAFF'}}>
-                <Text style={{textAlign:'center'}}>LOGIN</Text>
+            <TouchableOpacity onPress={()=>this.props.navigation.navigate('Login')} style={{ marginTop: 10, borderRadius: 30, padding: 10, width: '100%', alignSelf: 'center', backgroundColor: '#A3D343' }}>
+                <Text style={{textAlign:'center',color:"white" ,fontWeight:'600'}}>LOGIN</Text>
             </TouchableOpacity>
          </View>
       </View>

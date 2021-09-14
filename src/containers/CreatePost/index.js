@@ -20,7 +20,8 @@ class CreatePost extends React.Component {
       id: '', //documentid
       approve: 'false',
       image: "",
-      amountArrange:''
+      amountArrange:'',
+      loader:false
     }
 }
   componentDidMount = async () => {
@@ -31,32 +32,38 @@ class CreatePost extends React.Component {
     this.setState({ username: User.fname });
     this.setState({ phonenumber: User.mobile_num });
     this.setState({ uid: User.uid });
-    console.log(User, 'create post page');
+  
   }
   createPost = () => {
-    const { username, phonenumber, bgroup, quality, price, uid, approve, image,amountArrange } = this.state;
+    const { username, phonenumber, bgroup, quality, price, uid, approve, image,amountArrange ,description} = this.state;
     if (!username) return alert('Please enter your Username')
     else if (!phonenumber) return alert('Please enter your Phone Number')
     else if (!bgroup) return alert('Please enter your Blood Group')
     else if (!quality) return alert('Please enter the Quality')
     else if (!price) return alert('Please enter the Price')
     else if (!image) return alert('Please select Image')
+    else if (!description) return alert('Please select Image')
+    this.setState({loader:true})
     const ref = firestore().collection("createPost").doc()
     const id = ref.id;
     this.setState({ id })
-    ref.set({
-      username,
-      phonenumber,
-      bgroup,
-      quality,
-      total_amount:price,
-      approve,
-      uid,
-      image,
-      amountArrange,
-      id
-    })
+    var details={
+        username,
+        phonenumber,
+        bgroup,
+        quality,
+        total_amount:price,
+        approve,
+        uid,
+        image,
+        amountArrange,
+        description,
+        id    
+    }
+    console.log(details,'this is detail')
+    ref.set(details)
       .then((docRef) => {
+        this.setState({loader:false})
         console.log("addedd")
         alert("Post Added!!")
         this.props.navigation.navigate("Dashboard");
@@ -67,27 +74,35 @@ class CreatePost extends React.Component {
   }
   choosePhoto = () => {
     console.log("choose phot function called");
+    this.setState({loader:true})
     const { id } = this.state;
+    console.log(id,'this is id')
     ImagePicker.openPicker({
       width: 300,
       height: 400,
       cropping: true
     }).then(image => {
-      console.log(image);
-      this.setState({ image: image.path })
-      let reference = storage().ref(image.filename);         // 2
+      // console.log(new Date('October 15, 1996 05:35:32').getTime());
+      // this.setState({ image: image.path })
+      let reference = storage().ref(`images/${new Date('October 15, 1996 05:35:32').getTime()}/${image.filename}`);         // 2
       let task = reference.putFile(image.path);
       console.log(task);
-      task.then(() => {
-        const fileurl = reference.getDownloadURL();
-        fileurl.then((data) => {
-          this.setState({ image: data })
+      task.then(async() => {
+        const fileurl =  reference.getDownloadURL();
+     const data=   await fileurl.then((data) => {
+          console.log(data,'this is data' )
+          this.setState({loader:false})
+         return data 
         })
-          .catch((err) => {
-            console.log(err.message)
-          })
+        .catch((err) => {
+          this.setState({loader:false})
+          console.log(err.message)
+        })
+        this.setState({ image: data })
+         
       })
       .catch((err) => {
+          this.setState({loader:false})
           console.log(err.message);
       })
     });
@@ -98,14 +113,17 @@ class CreatePost extends React.Component {
   }
   render() {
     console.log("image state",this.state.image);
-    const { username, phonenumber, bgroup, quality, price, description, image } = this.state;
+    const { username, phonenumber, bgroup, quality, price, description, image,loader } = this.state;
     return (
       <View style={{ flex: 1, backgroundColor: "white", justifyContent: 'flex-start' }}>
-        <Header navigation={this.props.navigation} />
+       {loader ? <View style={{ position: "absolute", zIndex: 99, justifyContent: 'center', top: 0, bottom: 0, right: 0, left: 0, backgroundColor: 'rgba(0,0,0,0.5)' }}>
+          <ActivityIndicator size="large" color="black" />
+        </View> : null
+        }
+        <Header back pageName="Donate" logoutvisible navigation={this.props.navigation} />
         <ScrollView>
           <View style={{ padding: 20 }}>
-            <Text style={{ fontSize: 20, fontWeight: '700' }}>C R E A T E P O S T</Text>
-            <Text style={{ marginTop: 10 }}>Enter the Case Details</Text>
+            <Text style={{ marginTop: 10,fontSize:18,fontWeight:'500' }}>Enter the Case Details!</Text>
             <TextInput value={username} onChangeText={(username) => this.setState({ username })} placeholder="Username" style={{ marginTop: 10, padding: 10, borderColor: 'gray', borderWidth: 1 }} />
             <TextInput value={phonenumber} onChangeText={(phonenumber) => this.setState({ phonenumber })} placeholder="Phone Number" style={{ marginTop: 10, padding: 10, borderColor: 'gray', borderWidth: 1 }} />
             <TextInput value={bgroup} onChangeText={(bgroup) => this.setState({ bgroup })} placeholder="Blood Group" style={{ marginTop: 10, padding: 10, borderColor: 'gray', borderWidth: 1 }} />
@@ -113,7 +131,7 @@ class CreatePost extends React.Component {
             <TextInput value={price} onChangeText={(price) => this.setState({ price })} placeholder="Price" style={{ marginTop: 10, padding: 10, borderColor: 'gray', borderWidth: 1 }} />
             <TextInput value={description} multiline={true} onChangeText={(description) => this.setState({ description })} placeholder="Description" style={{ marginTop: 10, padding: 10, borderColor: 'gray', borderWidth: 1, height: 80 }} />
             <View style={{ flexDirection: 'row' }}>
-              <TouchableOpacity onPress={this.choosePhoto} style={{ marginTop: 20, borderWidth: 1, padding: 10, width: '50%', borderRadius: 3 }}>
+              <TouchableOpacity onPress={this.choosePhoto} style={{ marginTop: 20, borderWidth: 1, padding: 10, width: '50%', borderRadius: 3 ,borderColor:'#A3D343'}}>
                 <Text style={{ textAlign: 'center' }}>Choose Photo</Text>
               </TouchableOpacity>
               {this.state.image ?
@@ -122,10 +140,15 @@ class CreatePost extends React.Component {
               }
               
             </View>
-            <TouchableOpacity onPress={()=>this.removePhoto()} style={{ marginTop: 20, padding: 10 }}>
-              <Text>Remove photo</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={()=>this.createPost()} style={{ marginTop: 10, borderRadius: 30, padding: 10, width: '100%', alignSelf: 'center', backgroundColor: '#33CAFF' }}>
+            {
+              this.state.image ?
+                  <TouchableOpacity onPress={()=>this.removePhoto()} style={{ marginTop: 20, padding: 10 }}>
+                  <Text>Remove photo</Text>
+                </TouchableOpacity>
+            : null
+            }
+        
+            <TouchableOpacity onPress={()=>this.createPost()} style={{ marginTop: 10, borderRadius: 30, padding: 10, width: '100%', alignSelf: 'center', backgroundColor: '#A3D343' }}>
               <Text style={{ textAlign: 'center' }}>POST</Text>
             </TouchableOpacity>
           </View>

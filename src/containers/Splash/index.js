@@ -11,8 +11,8 @@ class Splash extends React.Component {
   render() {
    
     return (
-      <View style={{flex: 1,backgroundColor:"#33CAFF",justifyContent:'center',alignItems:'center'}}>
-        <Text style={{fontSize:20}}>Blood Bank App</Text>
+      <View style={{flex: 1,backgroundColor:"#A3D343",justifyContent:'center',alignItems:'center'}}>
+       <Image source={require("../../assets/logo.png")} style={{width:130,height:130}} />
       </View>
     );
   }

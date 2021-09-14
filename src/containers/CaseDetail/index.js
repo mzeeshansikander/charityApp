@@ -3,7 +3,7 @@ import { View, Text, Image, TextInput, TouchableOpacity, ActivityIndicator, Asyn
 import Header from '../../components/HeaderCustom';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-
+import {  Card } from 'native-base';
 
 class CaseDetail extends React.Component {
     state = {
@@ -26,7 +26,7 @@ class CaseDetail extends React.Component {
     }
     help=()=>{
        const {alldata,newamount}=this.state;
-       if (!newamount) return alert('Please enter New Amount')
+       if (!newamount) return alert('Please enter Donation Amount')
        const {uid,id,username}=alldata;
        console.log(uid,id,username)
        const ref = firestore().collection("createPost").doc(id).collection("helpuser").doc()
@@ -56,27 +56,26 @@ class CaseDetail extends React.Component {
         const { alldata,newamount,visible ,currentcaseupdateData} = this.state;
         return (
             <View style={{ flex: 1, backgroundColor: "white", justifyContent: 'flex-start' }}>
-                <Header logoutvisible navigation={this.props.navigation} />
-                <View style={{ padding: 20 }}>
+                <Header back pageName="Case Details" logoutvisible navigation={this.props.navigation} />
+                <Card style={{ padding: 10}}>
                     <ScrollView>
-                        <TouchableOpacity style={{ padding: 20, marginTop: 10, borderWidth: 1, borderColor: 'gray', borderRadius: 20 }}>
-                            {/* <Text>Name:{currentcaseupdateData.username}</Text> */}
-                            <Text>Phone Number:{currentcaseupdateData.phonenumber}</Text>
-                            <Text>Blood Group:{currentcaseupdateData.bgroup}</Text>
-                            <Text>Total Amount:{currentcaseupdateData.total_amount}</Text>
-                            <Text>Quality:{currentcaseupdateData.quality}</Text>
-                            <Text>Amount Arranged:{currentcaseupdateData.amountArrange==''? '0': currentcaseupdateData.amountArrange}</Text>
+                        <TouchableOpacity style={{borderRadius: 20 }}>
+                            <Image source={{uri:currentcaseupdateData.image}} style={{width:'100%',height:150}} />
+                            <Text style={{fontSize:15,marginTop:12,fontWeight:'500'}}>Contact Details:{currentcaseupdateData.phonenumber}</Text>
+                            <Text style={{fontSize:15,fontWeight:'500'}}>Blood Group Required:{currentcaseupdateData.bgroup}</Text>
+                            <Text style={{fontSize:15,fontWeight:'500'}}>Total Amount Required:{currentcaseupdateData.total_amount}</Text>
+                            <Text style={{fontSize:15,fontWeight:'500'}}>Quality:{currentcaseupdateData.quality}</Text>
+                            <Text style={{fontSize:15,fontWeight:'500'}}>Amount Arranged:{currentcaseupdateData.amountArrange==''? '0': currentcaseupdateData.amountArrange}</Text>
                         </TouchableOpacity>
-                           <View>
-                             <TextInput value={newamount} onChangeText={(newamount)=>this.setState({newamount})}  placeholder="Enter Your Amount" style={{marginTop:10,padding:10,borderColor:'gray',borderWidth:1}} />
-                           </View>
+                         <TextInput value={newamount} onChangeText={(newamount)=>this.setState({newamount})}  placeholder="Enter the Amount you want to donate" style={{marginTop:10,padding:10,borderColor:'gray',borderWidth:1}} />
+                         
                          
                         
-                        <TouchableOpacity onPress={()=>this.help()} style={{marginTop:10,borderRadius:30,padding:10,width:'100%',alignSelf:'center',backgroundColor:'#33CAFF'}}>
-                            <Text style={{textAlign:'center'}}>Help</Text>
+                        <TouchableOpacity onPress={()=>this.help()} style={{marginTop:10,borderRadius:30,padding:10,width:'100%',alignSelf:'center',backgroundColor:'#A3D343'}}>
+                            <Text style={{textAlign:'center',color:'white',fontWeight:'700'}}>Donate</Text>
                         </TouchableOpacity>
                     </ScrollView>
-                </View>
+                </Card>
             </View>
         );
     }

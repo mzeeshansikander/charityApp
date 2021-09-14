@@ -209,23 +209,26 @@ class Login extends React.Component {
           <ActivityIndicator size="large" color="black" />
         </View> : null
         }
-        <Header />
-        <View style={{ padding: 20 }}>
-          <Text style={{ fontSize: 20, fontWeight: '700' }}>L O G I N</Text>
-          <Text style={{ marginTop: 10 }}>Please fill the form</Text>
-          <TextInput value={email} onChangeText={(email) => this.setState({ email })} placeholder="Email" style={{ marginTop: 10, padding: 10, borderColor: 'gray', borderWidth: 1 }} />
-          <TextInput value={password} onChangeText={(password) => this.setState({ password })} placeholder="Password" style={{ marginTop: 10, padding: 10, borderColor: 'gray', borderWidth: 1 }} />
-          <TouchableOpacity onPress={this.login} style={{ marginTop: 10, borderRadius: 30, padding: 10, width: '100%', alignSelf: 'center', backgroundColor: '#33CAFF' }}>
-            <Text style={{ textAlign: 'center' }}>LOGIN</Text>
+       <View style={{ padding: 20 }}>
+          <Text style={{ fontSize: 28, fontWeight: '700',textAlign:'center',marginTop:100,color:'#A3D343' }}>L O G I N</Text>
+          <TextInput value={email} onChangeText={(email) => this.setState({ email })} placeholder="Enter your Email" style={{ marginTop: 40, padding: 10, borderColor: 'gray', borderWidth: 1,borderRadius:10 }} />
+          <TextInput value={password} onChangeText={(password) => this.setState({ password })} placeholder="Enter your Password" style={{ marginTop: 10, padding: 10, borderColor: 'gray', borderWidth: 1 ,borderRadius:10}} />
+          <TouchableOpacity onPress={this.login} style={{ marginTop: 20, borderRadius: 30, padding: 10, width: '100%', alignSelf: 'center', backgroundColor: '#A3D343' }}>
+            <Text style={{ textAlign: 'center',color:"white" }}>LOGIN</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('Signup')} style={{ marginTop: 10, borderRadius: 30, padding: 10, width: '100%', alignSelf: 'center', backgroundColor: '#33CAFF' }}>
-            <Text style={{ textAlign: 'center' }}>SIGNUP</Text>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('Signup')} style={{ marginTop: 10, borderRadius: 30, padding: 10, width: '100%', alignSelf: 'center', backgroundColor: '#A3D343' }}>
+            <Text style={{ textAlign: 'center' ,color:"white"}}>SIGNUP</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={this.loginGoogle} style={{ marginTop: 10, borderRadius: 30, padding: 10, width: '100%', alignSelf: 'center', backgroundColor: '#33CAFF' }}>
-            <Text style={{ textAlign: 'center' }}>LOGIN with google</Text>
+          <View style={{flexDirection: 'row',marginTop:20}}>
+            <View style={{backgroundColor: 'gray', height: 1, flex: 1, alignSelf: 'center'}} />
+            <Text style={{ alignSelf:'center', paddingHorizontal:5, fontSize: 13 }}>OR</Text>
+            <View style={{backgroundColor: 'gray', height: 1, flex: 1, alignSelf: 'center'}} />
+        </View>
+          <TouchableOpacity onPress={this.loginGoogle} style={{ marginTop: 10, borderRadius: 30, padding: 10, width: '100%', alignSelf: 'center',borderWidth:1,borderColor:'#A3D343', backgroundColor: 'white' }}>
+            <Text style={{ textAlign: 'center',color:"#A3D343" ,fontWeight:'600'}}>Login with Google</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={this.onFacebookButtonPress} style={{ marginTop: 10, borderRadius: 30, padding: 10, width: '100%', alignSelf: 'center', backgroundColor: '#33CAFF' }}>
-            <Text style={{ textAlign: 'center' }}>LOGIN with facebook</Text>
+          <TouchableOpacity onPress={this.onFacebookButtonPress} style={{ marginTop: 10, borderRadius: 30, padding: 10, width: '100%', alignSelf: 'center',borderWidth:1,borderColor:'#A3D343', backgroundColor: 'white' }}>
+            <Text style={{ textAlign: 'center',color:"#A3D343",fontWeight:'600' }}>Login with Facebook</Text>
           </TouchableOpacity>
         </View>
       </View>
